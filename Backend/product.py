@@ -149,7 +149,9 @@ def view_product():
             print("Invalid Choice!")
 
     cursor.close()
-    conn.close()# -------------------- UPDATE PRODUCT --------------------
+    conn.close()
+    
+    # -------------------- UPDATE PRODUCT --------------------
 
 def update_product():
 
@@ -311,7 +313,9 @@ def delete_product():
         print("Delete Cancelled.")
 
     cursor.close()
-    conn.close()# -------------------- SEARCH PRODUCT --------------------
+    conn.close()
+    
+    #-------------------- SEARCH PRODUCT --------------------
 
 def search_product():
 
