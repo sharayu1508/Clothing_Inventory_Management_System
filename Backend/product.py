@@ -2,7 +2,7 @@ from database import get_connection
 from tabulate import tabulate
 
 
-# -------------------- TABLE HEADERS --------------------
+    # -------------------- TABLE HEADERS --------------------
 
 PRODUCT_HEADERS = [
     "Product ID",
@@ -15,9 +15,7 @@ PRODUCT_HEADERS = [
     "Stock",
     "Supplier ID"
 ]
-
-
-# -------------------- ADD PRODUCT --------------------
+    # -------------------- ADD PRODUCT --------------------
 
 def add_product():
 
@@ -70,8 +68,7 @@ def add_product():
     cursor.close()
     conn.close()
 
-
-# -------------------- VIEW PRODUCT --------------------
+    # -------------------- VIEW PRODUCT --------------------
 
 def view_product():
 
@@ -149,7 +146,9 @@ def view_product():
             print("Invalid Choice!")
 
     cursor.close()
-    conn.close()# -------------------- UPDATE PRODUCT --------------------
+    conn.close()
+    
+    # -------------------- UPDATE PRODUCT --------------------
 
 def update_product():
 
@@ -262,7 +261,6 @@ def update_product():
     cursor.close()
     conn.close()
 
-
 # -------------------- DELETE PRODUCT --------------------
 
 def delete_product():
@@ -311,7 +309,9 @@ def delete_product():
         print("Delete Cancelled.")
 
     cursor.close()
-    conn.close()# -------------------- SEARCH PRODUCT --------------------
+    conn.close()
+    
+    # -------------------- SEARCH PRODUCT --------------------
 
 def search_product():
 
@@ -397,8 +397,7 @@ def search_product():
         else:
             print("No Product Found.")
 
-
-# -------------------- PRODUCT MENU --------------------
+    # -------------------- PRODUCT MENU --------------------
 
 def product_menu():
 
