@@ -1,0 +1,225 @@
+from database import get_connection
+from tabulate import tabulate
+
+HEADERS = ["Supplier ID","Supplier Name","Contact Person","Phone Number","Address"]
+
+def add_supplier():
+    conn=get_connection()
+    cur=conn.cursor()
+    name=input("Enter Supplier Name : ")
+    person=input("Enter Contact Person : ")
+    phone=input("Enter Phone Number : ")
+    address=input("Enter Address : ")
+
+    cur.execute("""
+    INSERT INTO Suppliers
+    (Supplier_Name,Contact_Person,Phone,Address)
+    VALUES(%s,%s,%s,%s)
+    """,(name,person,phone,address))
+
+    conn.commit()
+    print("\nSupplier Added Successfully.")
+    cur.close()
+    conn.close()
+
+def view_all_suppliers():
+    conn=get_connection()
+    cur=conn.cursor()
+    cur.execute("""
+    SELECT Supplier_ID,Supplier_Name,Contact_Person,Phone,Address
+    FROM Suppliers
+    ORDER BY Supplier_ID
+    """)
+    data=cur.fetchall()
+
+    if data:
+        print(tabulate(data,headers=HEADERS,tablefmt="grid"))
+    else:
+        print("No Supplier Records Found.")
+
+    cur.close()
+    conn.close()
+
+def search_supplier():
+    conn=get_connection()
+    cur=conn.cursor()
+
+    print("\n1. Search by ID")
+    print("2. Search by Name")
+    print("3. Search by Contact Person")
+
+    ch=input("Enter Choice : ")
+
+    if ch=="1":
+        value=int(input("Enter Supplier ID : "))
+        cur.execute("""
+        SELECT Supplier_ID,Supplier_Name,Contact_Person,Phone,Address
+        FROM Suppliers WHERE Supplier_ID=%s
+        """,(value,))
+    elif ch=="2":
+        value=input("Enter Supplier Name : ")
+        cur.execute("""
+        SELECT Supplier_ID,Supplier_Name,Contact_Person,Phone,Address
+        FROM Suppliers WHERE Supplier_Name=%s
+        """,(value,))
+    elif ch=="3":
+        value=input("Enter Contact Person : ")
+        cur.execute("""
+        SELECT Supplier_ID,Supplier_Name,Contact_Person,Phone,Address
+        FROM Suppliers WHERE Contact_Person=%s
+        """,(value,))
+    else:
+        print("Invalid Choice")
+        cur.close()
+        conn.close()
+        return
+
+    rows=cur.fetchall()
+
+    if rows:
+        print(tabulate(rows,headers=HEADERS,tablefmt="grid"))
+    else:
+        print("Supplier Not Found.")
+
+    cur.close()
+    conn.close()
+
+def update_supplier():
+    conn=get_connection()
+    cur=conn.cursor()
+
+    sid=int(input("Enter Supplier ID : "))
+
+    cur.execute("SELECT * FROM Suppliers WHERE Supplier_ID=%s",(sid,))
+    if cur.fetchone() is None:
+        print("Supplier Not Found.")
+        cur.close()
+        conn.close()
+        return
+
+    print("1. Supplier Name")
+    print("2. Contact Person")
+    print("3. Phone Number")
+    print("4. Address")
+
+    ch=input("Enter Choice : ")
+
+    if ch=="1":
+        val=input("New Supplier Name : ")
+        cur.execute("UPDATE Suppliers SET Supplier_Name=%s WHERE Supplier_ID=%s",(val,sid))
+    elif ch=="2":
+        val=input("New Contact Person : ")
+        cur.execute("UPDATE Suppliers SET Contact_Person=%s WHERE Supplier_ID=%s",(val,sid))
+    elif ch=="3":
+        val=input("New Phone Number : ")
+        cur.execute("UPDATE Suppliers SET Phone=%s WHERE Supplier_ID=%s",(val,sid))
+    elif ch=="4":
+        val=input("New Address : ")
+        cur.execute("UPDATE Suppliers SET Address=%s WHERE Supplier_ID=%s",(val,sid))
+    else:
+        print("Invalid Choice")
+        cur.close()
+        conn.close()
+        return
+
+    conn.commit()
+    print("Supplier Updated Successfully.")
+
+    cur.close()
+    conn.close()
+
+def delete_supplier():
+    conn=get_connection()
+    cur=conn.cursor()
+
+    sid=int(input("Enter Supplier ID : "))
+
+    cur.execute("SELECT * FROM Suppliers WHERE Supplier_ID=%s",(sid,))
+    row=cur.fetchone()
+
+    if row is None:
+        print("Supplier Not Found.")
+    else:
+        c=input("Delete this Supplier? (Y/N): ")
+        if c.upper()=="Y":
+            cur.execute("DELETE FROM Suppliers WHERE Supplier_ID=%s",(sid,))
+            conn.commit()
+            print("Supplier Deleted Successfully.")
+        else:
+            print("Delete Cancelled.")
+
+    cur.close()
+    conn.close()
+
+def supplier_report():
+    conn=get_connection()
+    cur=conn.cursor()
+
+    while True:
+        print("\n========== SUPPLIER REPORT ==========")
+        print("1. View Supplier Report")
+        print("2. Search Supplier Report")
+        print("3. Supplier Details Report")
+        print("4. Back")
+
+        ch=input("Enter Choice : ")
+
+        if ch=="1":
+            view_all_suppliers()
+
+        elif ch=="2":
+            search_supplier()
+
+        elif ch=="3":
+            sid=int(input("Enter Supplier ID : "))
+            cur.execute("""
+            SELECT Supplier_ID,Supplier_Name,Contact_Person,Phone,Address
+            FROM Suppliers WHERE Supplier_ID=%s
+            """,(sid,))
+            data=cur.fetchall()
+            if data:
+                print(tabulate(data,headers=HEADERS,tablefmt="grid"))
+            else:
+                print("Supplier Not Found.")
+
+        elif ch=="4":
+            break
+        else:
+            print("Invalid Choice")
+
+    cur.close()
+    conn.close()
+
+def supplier_menu():
+    while True:
+        print("\n========== SUPPLIER MANAGEMENT ==========")
+        print("1. Add Supplier")
+        print("2. View All Suppliers")
+        print("3. Search Supplier")
+        print("4. Update Supplier Details")
+        print("5. Delete Supplier")
+        print("6. Supplier Reports")
+        print("7. Exit")
+
+        ch=input("Enter Choice : ")
+
+        if ch=="1":
+            add_supplier()
+        elif ch=="2":
+            view_all_suppliers()
+        elif ch=="3":
+            search_supplier()
+        elif ch=="4":
+            update_supplier()
+        elif ch=="5":
+            delete_supplier()
+        elif ch=="6":
+            supplier_report()
+        elif ch=="7":
+            print("Thank You")
+            break
+        else:
+            print("Invalid Choice")
+
+if __name__=="__main__":
+    supplier_menu()
