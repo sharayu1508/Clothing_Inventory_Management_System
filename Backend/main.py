@@ -5,6 +5,11 @@ from product import product_menu
 from inventory import inventory_menu
 from sales import sales_menu
 from reports import reports_menu
+from consumer import consumer_menu   
+from login import add_users  
+from ai_chat import ai_assistant
+
+# -------------------- ADMIN MENU --------------------
 
 def admin_menu():
     while True:
@@ -14,7 +19,8 @@ def admin_menu():
         print("3. Inventory Management")
         print("4. Sales Management")
         print("5. Reports")
-        print("6. Logout")
+        print("6. Add User")
+        print("7. Logout")
 
         choice = input("Enter your choice: ")
 
@@ -34,19 +40,23 @@ def admin_menu():
             reports_menu()
 
         elif choice == "6":
+             add_users()
+
+        elif choice == "7":
             print("Logged Out Successfully...")
             break
-
         else:
             print("Invalid Choice!")
 
 
+# -------------------- USER MENU --------------------
+
 def user_menu():
     while True:
-        print("\n===== Customer MENU =====")
+        print("\n===== CUSTOMER MENU =====")
         print("1. View Products")
         print("2. Purchase Product")
-        print("4. Logout")
+        print("3. Logout")
 
         choice = input("Enter your choice: ")
 
@@ -57,9 +67,6 @@ def user_menu():
             sales_menu()
 
         elif choice == "3":
-            sales_menu()
-
-        elif choice == "4":
             print("Logged Out Successfully...")
             break
 
@@ -67,17 +74,49 @@ def user_menu():
             print("Invalid Choice!")
 
 
+# -------------------- MAIN MENU --------------------
+
 def main():
-    role = login()
 
-    if role == "admin":
-        admin_menu()
+    while True:
 
-    elif role == "user":
-        user_menu()
+        print("\n" + "=" * 50)
+        print("   CLOTHING INVENTORY MANAGEMENT SYSTEM")
+        print("=" * 50)
 
-    else:
-        print("Login Failed...")
+        print("1. Login")
+        print("2. Consumer (Guest)")
+        print("3. AI Assistant ")
+        print("4. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+
+            role = login()
+
+            if role == "admin":
+                admin_menu()
+
+            elif role == "user":
+                user_menu()
+
+            else:
+                print("Login Failed...")
+
+        elif choice == "2":
+            consumer_menu()
+
+        elif choice == "3":
+            ai_assistant()
+
+
+        elif choice == "4":
+            print("Thank You For Visiting.")
+            break
+
+        else:
+            print("Invalid Choice!")
 
 
 if __name__ == "__main__":
