@@ -242,13 +242,14 @@ python main.py
 
 # 👥 Team Member Details
 
-
- Sharayu Jadhav - Team Leader, Login Module, Main Module, Database Design, Consumer (Guest) Module, AI Chat Assistant Module, GitHub Management & Integration 
- Viraj - Supplier Management Module 
- Riddhi - Product Management Module 
- Saksham - Inventory Management Module 
- Sanskruti - Sales Management Module 
- Shrikant - Reports Module 
+| Team Member | Role | Responsibilities |
+|-------------|------|------------------|
+| **Sharayu Jadhav** | **Team Leader** | Login Module<br>Main Module<br>Database Connection<br>Database Design<br>Consumer (Guest) Module<br>AI Chat Assistant Module<br>Project Integration<br>GitHub Management<br>Testing & Debugging |
+| **Viraj** | Team Member | Supplier Management Module |
+| **Riddhi** | Team Member | Product Management Module |
+| **Saksham** | Team Member | Inventory Management Module |
+| **Sanskruti** | Team Member | Sales Management Module |
+| **Shrikant** | Team Member | Reports Module | 
 
 ---
 
